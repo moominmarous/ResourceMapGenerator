@@ -32,11 +32,43 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            background-color: #ddd;
+        }
+
+        #stats {
+            background-color: #ddd;
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            height: max-content;
+            width: max-content;
+            /* width: 100px; */
+            padding: 10px;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
         .cell-unit {
             box-sizing: border-box;
             border: none;
+            user-select: none;
+            color: inherit;
+        }
+
+        .color-block {
+            width: fit-content;
+            height: fit-content;
+            background-color: #ddd;
+        }
+
+        .statText {
+            width: 50px;
         }
     </style>
 </head>
@@ -68,10 +100,22 @@
                 <option value="2">Isometric</option>
             </select>
         </div>
+        <div>
+            <label for="text-select">Numbers Visible:</label>
+            <select id="text-select" onchange="textVisible()">
+                <option value="false" selected>Invisible</option>
+                <option value="true">Visible</option>
+            </select>
+        </div>
         <div style="display: flexbox">
             <button onclick="generateMap(0)"> Generate! </button>
             <button onclick="generateMap(1)"> Randomize! </button>
         </div>
+    </div>
+    <div id="stats">
+        <span>Statistics</span>
+        <div>Total Resources: <input id="totalResources" disabled class="statText" value="0"></input></div>
+        <div id="statsData"></div>
     </div>
     <div id="map-space"></div>
     <script src="map.js"></script>
