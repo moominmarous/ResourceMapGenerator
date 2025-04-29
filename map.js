@@ -63,5 +63,32 @@ const generateMap = (flag) => {
     container.style.gridTemplateRows = `repeat(${DIMENSIONS.map_h}, 1fr)`;
     container.style.width = `${20 * DIMENSIONS.map_w}px`;
     container.style.height = `${20 * DIMENSIONS.map_h}px`;
+    DIMENSIONS.scale = 1;
     drawMap(map, container);
+};
+
+const zoom = (scale) => {
+    //-1 is out | 0 default | 1 is in
+    if (scale == 0) {
+        DIMENSIONS.scale = 1.0;
+    } else if (scale == 1) {
+        DIMENSIONS.scale = Math.min(2.0, DIMENSIONS.scale + 0.05);
+    } else {
+        DIMENSIONS.scale = Math.max(0.1, DIMENSIONS.scale - 0.10);
+    }
+    console.log(DIMENSIONS.scale)
+    document.getElementById("map-space").style.transformOrigin = "top center";
+    let scaleIndex = document.getElementById("map-space").style.transform.indexOf("scale(");
+    if (scaleIndex == -1) {
+        document.getElementById("map-space").style.transform += ` scale(${DIMENSIONS.scale})`
+    } else {
+        let transformString = document.getElementById("map-space").style.transform.substring(0, scaleIndex) + ` scale(${DIMENSIONS.scale})`
+        document.getElementById("map-space").style.transform = transformString;
+    }
+    console.log(document.getElementById("map-space").style.transform)
+}
+
+window.onload = () => {
+    document.getElementById("map-select").value = "1"; // Set default to "Orthogonal"
+    transformContainer(); // Apply the default transformation
 };
