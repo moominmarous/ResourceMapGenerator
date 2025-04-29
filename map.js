@@ -4,6 +4,9 @@ const DIMENSIONS = {};
 
 const STATS = new Array(4);
 
+let isDragging = false;
+let offsetX, offsetY;
+
 const getDimensions = (flag) => {
     if (flag != 0) {
         document.getElementById("cell-input").value = Math.floor(Math.random() * 9) + 1;
@@ -39,12 +42,15 @@ const drawMap = (map, container) => {
         unit.height = unit.width
         unit.style.backgroundColor = COLORS[element];
         unit.innerText = element;
+        // unit.style.border = `1px solid ${COLORS[element]}`
         if (i % DIMENSIONS.cell_size == 0) {
             unit.style.borderLeft = '1px solid #ccc';
-        }
-        if (Math.ceil(((i + 1) / DIMENSIONS.map_w)) % DIMENSIONS.cell_size == 0) {
+        } if (Math.ceil(((i + 1) / DIMENSIONS.map_w)) % DIMENSIONS.cell_size == 0) {
             unit.style.borderBottom = '1px solid #ccc';
         }
+        unit.addEventListener("mouseenter", (e) => {
+            console.log(`${unit.style.backgroundColor}`)
+        })
         container.appendChild(unit);
     }
 }
@@ -55,6 +61,10 @@ const textVisible = () => {
 
 }
 
+/**
+ * This is the main function
+ * @param {*} flag determines whether dimensions are as selected or randomized.
+ */
 const generateMap = (flag) => {
     clearStats();
     getDimensions(flag);
@@ -80,25 +90,58 @@ const generateMap = (flag) => {
     container.style.height = `${20 * DIMENSIONS.map_h}px`;
     DIMENSIONS.scale = 1;
     drawMap(map, container);
+    document.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - container.getBoundingClientRect().left * DIMENSIONS.scale;
+        offsetY = e.clientY - container.getBoundingClientRect().top * DIMENSIONS.scale;
+        console.log(offsetX, offsetY)
+        // Add a class to indicate dragging (optional)
+        container.style.cursor = "grabbing";
+    })
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
 
+        // Update the position of the element
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+
+        container.style.position = 'absolute';
+        container.style.left = `${x}px`;
+        container.style.top = `${y}px`;
+    })
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+
+        // Reset the cursor
+        container.style.cursor = "grab";
+    });
 };
 
+
 const zoom = (scale) => {
+    let container = document.getElementById("map-space");
     //-1 is out | 0 default | 1 is in
     if (scale == 0) {
         DIMENSIONS.scale = 1.0;
+        container.style.position = 'absolute';
+        container.style.top = '50px'
+        console.log(`map space width: ${container.style.width}`);
+        let half = parseFloat(container.style.width) / 2;
+        console.log(`map space 1/2: ${half} px`);
+        container.style.left = `${half}px`
+
     } else if (scale == 1) {
         DIMENSIONS.scale = Math.min(2.0, DIMENSIONS.scale + 0.05);
     } else {
         DIMENSIONS.scale = Math.max(0.1, DIMENSIONS.scale - 0.10);
     }
-    document.getElementById("map-space").style.transformOrigin = "top center";
-    let scaleIndex = document.getElementById("map-space").style.transform.indexOf("scale(");
+    container.style.transformOrigin = "top center";
+    let scaleIndex = container.style.transform.indexOf("scale(");
     if (scaleIndex == -1) {
-        document.getElementById("map-space").style.transform += ` scale(${DIMENSIONS.scale})`
+        container.style.transform += ` scale(${DIMENSIONS.scale})`
     } else {
-        let transformString = document.getElementById("map-space").style.transform.substring(0, scaleIndex) + ` scale(${DIMENSIONS.scale})`
-        document.getElementById("map-space").style.transform = transformString;
+        let transformString = container.style.transform.substring(0, scaleIndex) + ` scale(${DIMENSIONS.scale})`
+        container.style.transform = transformString;
     }
 }
 

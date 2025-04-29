@@ -8,6 +8,8 @@
     <style>
         #map-space {
             /* width: 80%; */
+            /* position: absolute; */
+            /* top: 50px; */
             width: auto;
             /* height: 80vh; */
             margin: 20px auto;
@@ -62,6 +64,13 @@
             border: none;
             user-select: none;
             color: inherit;
+        }
+
+        .cell-unit:hover {
+            opacity: 50%;
+            border: 1px solid greenyellow;
+            transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+            box-sizing: border-box;
         }
 
         .color-block {
