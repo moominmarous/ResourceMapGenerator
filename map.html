@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RMG</title>
     <style>
+        /* #map-around {
+            box-sizing: border-box;
+            border: 1px solid red;
+        } */
+
         #map-space {
             /* width: 80%; */
-            /* width: auto; */
+            width: auto;
             /* height: 80vh; */
             margin: 20px auto;
             background-color: #ddd;
@@ -51,10 +56,19 @@
             <label for="height-input">Select height:</label>
             <input id="height-input" type="number" min="1" max="10" step="1" value="4">
         </div>
+        <div>
+            <label for="map-select">Map type:</label>
+            <select id="map-select" onchange="transformContainer()">
+                <option value="1">Orthogonal</option>
+                <option value="2">Isometric</option>
+            </select>
+        </div>
         <button onclick="generateMap(0)"> Generate! </button>
         <button onclick="generateMap(1)"> Randomize! </button>
     </div>
-    <div id="map-space"></div>
+    <div id="map-around">
+        <div id="map-space"></div>
+    </div>
     <script src="map.js"></script>
 </body>
 

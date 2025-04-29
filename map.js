@@ -11,7 +11,24 @@ const getDimensions = (flag) => {
     DIMENSIONS.cell_size = document.getElementById("cell-input").value;
     DIMENSIONS.map_w = document.getElementById("width-input").value * DIMENSIONS.cell_size;
     DIMENSIONS.map_h = document.getElementById("height-input").value * DIMENSIONS.cell_size;
+    transformContainer();
     console.log(DIMENSIONS);
+}
+
+const transformContainer = () => {
+    let container = document.getElementById('map-space');
+    if (container.childElementCount == 0) return;
+    let selectedMap = document.getElementById("map-select").value;
+    if (selectedMap == 2) {
+        container.style.height = "50 %";
+        container.style.transform = "rotateX(60deg) rotateZ(45deg)";
+        container.style.transformOrigin = "center";
+        container.style.boxShadow = "20px 20px 50px 10px grey"
+    } else {
+        container.style.transform = "";
+
+    }
+    console.log('transform!')
 }
 
 const drawMap = (map, container) => {
