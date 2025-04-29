@@ -24,7 +24,7 @@ const transformContainer = () => {
         container.style.height = "50 %";
         container.style.transform = "rotateX(60deg) rotateZ(45deg)";
         container.style.transformOrigin = "center";
-        container.style.boxShadow = "20px 20px 50px 10px grey"
+        // container.style.boxShadow = "20px 20px 50px 10px grey"
     } else {
         container.style.transform = "";
     }
