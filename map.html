@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMG</title>
+    <style>
+        #map-space {
+            /* width: 80%; */
+            /* width: auto; */
+            /* height: 80vh; */
+            margin: 20px auto;
+            background-color: #ddd;
+            /* border: 2px solid #ccc; */
+            display: grid;
+        }
+
+        #options {
+            border: 1px solid black;
+            height: max-content;
+            width: max-content;
+            /* width: 100px; */
+            padding: 10px;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cell-unit {
+            box-sizing: border-box;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to My ResourceMapGenerator</h1>
+    <div id="options">
+        <div>
+            <label for="cell-input">Cell size:</label>
+            <input id="cell-input" type="number" min="1" max="10" step="1" value="3">
+        </div>
+        <div>
+            <label for="width-input">Select width:</label>
+            <input id="width-input" type="number" min="1" max="10" step="1" value="6">
+        </div>
+        <div>
+            <label for="height-input">Select height:</label>
+            <input id="height-input" type="number" min="1" max="10" step="1" value="4">
+        </div>
+        <button onclick="generateMap(0)"> Generate! </button>
+        <button onclick="generateMap(1)"> Randomize! </button>
+    </div>
+    <div id="map-space"></div>
+    <script src="map.js"></script>
+</body>
+
+</html>
