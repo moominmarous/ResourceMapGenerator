@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RMG</title>
     <style>
+        body {
+            user-select: none;
+            background-image:
+                repeating-linear-gradient(0deg, #ccc, #ccc 1px, transparent 1px, transparent 100px),
+                repeating-linear-gradient(90deg, #ccc, #ccc 1px, transparent 1px, transparent 100px);
+            background-size: 100px 100px;
+        }
+
         #map-space {
             /* width: 80%; */
             /* position: absolute; */
@@ -82,16 +90,37 @@
         .statText {
             width: 50px;
         }
+
+        #point {
+            position: absolute;
+            top: -2.5px;
+            left: -2.5px;
+            z-index: 4;
+            width: 5px;
+            height: 5px;
+            background-color: red;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
     <h1>Welcome to My ResourceMapGenerator</h1>
     <div id="options">
-        <div style="display: flexbox">
+        <!-- <div style="display: flexbox">
             <button onclick="zoom(-1)">Zoom out</button>
             <button onclick="zoom(0)">Reset</button>
             <button onclick="zoom(1)">Zoom in</button>
+        </div> -->
+        <div>
+            <!-- <div>Zoom Scale: <input id="zoomScale" disabled class="statText" value="1.0"></input></div> -->
+            <div>Red X: <input id="origX" disabled class="statText" value="0"></input></div>
+            <div>Red Y: <input id="origY" disabled class="statText" value="0"></input></div>
+            <div>Offset X: <input id="offsetX" disabled class="statText" value="0"></input></div>
+            <div>Offset Y: <input id="offsetY" disabled class="statText" value="0"></input></div>
+            <div>Distance X: <input id="distanceX" disabled class="statText" value="0"></input></div>
+            <div>Distance Y: <input id="distanceY" disabled class="statText" value="0"></input></div>
+
         </div>
         <div>
             <label for="cell-input">Cell size:</label>
@@ -108,8 +137,8 @@
         <div>
             <label for="map-select">Map type:</label>
             <select id="map-select" onchange="transformContainer()">
-                <option value="1" selected>Orthogonal</option>
                 <option value="2">Isometric</option>
+                <option value="1">Orthogonal</option>
             </select>
         </div>
         <div>
@@ -130,6 +159,7 @@
         <div id="statsData"></div>
     </div>
     <div id="map-space"></div>
+    <div id="point"></div>
     <script src="map.js"></script>
 </body>
 
